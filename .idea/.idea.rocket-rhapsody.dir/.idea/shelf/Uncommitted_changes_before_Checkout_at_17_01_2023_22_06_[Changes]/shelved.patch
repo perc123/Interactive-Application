@@ -1,0 +1,36 @@
+Index: Assets/Scripts/AnimationManager.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System;\r\nusing System.Collections.Generic;\r\nusing TMPro;\r\nusing UnityEngine;\r\nusing UnityEngine.InputSystem;\r\n\r\npublic class AnimationManager : MonoBehaviour\r\n{\r\n    public List<GameObject> objects = new List<GameObject>();\r\n    public float time = 0;\r\n    public List<AnimationHandler> handlers = new List<AnimationHandler>();\r\n    \r\n    public TextMeshProUGUI timerText;\r\n\r\n    bool _isPlaying = false;\r\n    \r\n    public Camera  mainCamera;\r\n    \r\n    public AnimationPanelManager animationPanelManager;\r\n    \r\n    public Song currentSong;\r\n\r\n    [SerializeField] private GameObject queenObjects;\r\n    [SerializeField] private GameObject rocketManObjects;\r\n\r\n\r\n    // Start is called before the first frame update\r\n    // The animation handlers are added, these are later used to dispatch the animation events and time\r\n    void Start()\r\n    {\r\n        if (objects.Count == 0) return;\r\n        foreach (var obj in objects)\r\n        {\r\n            handlers.Add(obj.GetComponent<AnimationHandler>());\r\n        }\r\n\r\n        mainCamera = Camera.main;\r\n    }\r\n\r\n\r\n    // called bby ui button\r\n    public void StartTimer()\r\n    {\r\n        _isPlaying = true;\r\n        foreach (var handler in handlers)\r\n        {\r\n            handler.isPlaying = true;\r\n        }\r\n    }\r\n    \r\n    // called by ui button\r\n    public void StopTimer()\r\n    {\r\n        time = 0;\r\n        _isPlaying = false;\r\n        timerText.text = \"00:00\";\r\n        foreach (var handler in handlers)\r\n        {\r\n            handler.isPlaying = false;\r\n            handler.Reset();\r\n        }\r\n    }\r\n\r\n\r\n    // Update is called once per frame\r\n    // if the animation is playing, the time is increased and the animation handlers are updated\r\n    void Update()\r\n    {\r\n        switch (currentSong)\r\n        {\r\n            case Song.Queen:\r\n                queenObjects.SetActive(true);\r\n                rocketManObjects.SetActive(false);\r\n                break;\r\n            case Song.RocketMan:\r\n                queenObjects.SetActive(false);\r\n                rocketManObjects.SetActive(true);\r\n                break;\r\n            default:\r\n                throw new ArgumentOutOfRangeException();\r\n        }\r\n        \r\n        \r\n        if (_isPlaying)\r\n        {\r\n            time += Time.deltaTime;\r\n            timerText.text = time.ToString(\"F2\");\r\n            foreach (AnimationHandler handler in handlers)\r\n            {\r\n                handler.timer = time;\r\n            }\r\n        }\r\n    }\r\n    \r\n    // function that is used by the newly instantiated objects to register themselves to the animation manager\r\n    public void AddObject(GameObject obj)\r\n    {\r\n        objects.Add(obj);\r\n        handlers.Add(obj.GetComponent<AnimationHandler>());\r\n    }\r\n\r\n    // called bz input system to select an object\r\n    public void SelectObject()\r\n    {\r\n        Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);\r\n        if (Input.GetMouseButtonDown(0))\r\n        {\r\n            Collider2D targetObject = Physics2D.OverlapPoint(mousePosition);\r\n            if (targetObject)\r\n            {\r\n                var selectedObject = targetObject.transform.gameObject;\r\n                animationPanelManager.SetCurrentObject(selectedObject);\r\n                Debug.Log(selectedObject.name);\r\n            }\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Assets/Scripts/AnimationManager.cs b/Assets/Scripts/AnimationManager.cs
+--- a/Assets/Scripts/AnimationManager.cs	
++++ b/Assets/Scripts/AnimationManager.cs	
+@@ -114,4 +114,23 @@
+             }
+         }
+     }
+-}
+\ No newline at end of file
++
++    public void SelectSong()
++    {
++        switch (currentSong)
++        {
++            case Song.Queen:
++                queenObjects.SetActive(true);
++                rocketManObjects.SetActive(false);
++                break;
++            case Song.RocketMan:
++                queenObjects.SetActive(false);
++                rocketManObjects.SetActive(true);
++                break;
++            default:
++                throw new ArgumentOutOfRangeException();
++        }
++
++    }
++    
++}

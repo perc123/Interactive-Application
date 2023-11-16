@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - VideoEdit
+  - LeftBeamer
+  - RightBeamer
+  - animationPanelElement
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Videobackground
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: VideoBackground
+    uniqueID: 4173654397
+    locked: 0
+  - name: Ceiling
+    uniqueID: 812118707
+    locked: 0
+  - name: chandelier
+    uniqueID: 425408847
+    locked: 0
+  - name: Highlights
+    uniqueID: 3662290283
+    locked: 0
+  - name: AnimationObjects
+    uniqueID: 2262349321
+    locked: 0
+  - name: ParticleEffects
+    uniqueID: 343393207
+    locked: 0
+  - name: Stage
+    uniqueID: 3075716597
+    locked: 0
+  - name: Choir
+    uniqueID: 2149513455
+    locked: 0
+  - name: Creditvideo
+    uniqueID: 4271787965
+    locked: 0
+  - name: creditText
+    uniqueID: 1067828193
+    locked: 0
